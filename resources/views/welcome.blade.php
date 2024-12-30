@@ -1,7 +1,18 @@
 @extends('layout.appindex')
 
 @section('content')
+@if (Session::has('message'))
+<script>
+    Swal.fire({
+    position: "top-end",
+    icon: "{{ Session::get('icon') }}",
+    title: "{{ Session::get('message') }}",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
 
+@endif
 {{-- slider --}}
 <div class="section">
     <div class="container">

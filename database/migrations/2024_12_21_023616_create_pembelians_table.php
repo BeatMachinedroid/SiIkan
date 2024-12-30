@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
+
+            $table->unsignedBigInteger('id_ikan');
+            $table->foreign('id_ikan')->references('id')->on('ikans');
+
+            $table->integer('jumlah');
+            $table->decimal('total_harga', 10, 2);
+            $table->string('alamat');
+            $table->string('no_telpon');
+            $table->string('status');
             $table->timestamps();
         });
     }

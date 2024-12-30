@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('jenis_ikan');
             $table->text('gambar');
             $table->string('berat_ikan');
-            $table->char('harga');
+            $table->decimal('harga', 10, 2);
             $table->timestamps();
         });
     }
