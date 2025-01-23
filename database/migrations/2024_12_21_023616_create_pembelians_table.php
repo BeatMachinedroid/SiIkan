@@ -14,16 +14,21 @@ return new class extends Migration
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('id_ikan');
-            $table->foreign('id_ikan')->references('id')->on('ikans');
+            $table->foreign('id_ikan')->references('id')->on('ikans')->onDelete('cascade');
 
+            $table->char('kode_order');
             $table->integer('jumlah');
-            $table->decimal('total_harga', 10, 2);
+            $table->char('total_harga');
             $table->string('alamat');
             $table->string('no_telpon');
-            $table->string('status');
+            $table->string('metode_pembayaran');
+            $table->char('ongkir');
+            $table->string('batas_pembayaran')->nullable();
+            $table->string('status_order');
+            $table->string('status_pembayaran');
             $table->timestamps();
         });
     }

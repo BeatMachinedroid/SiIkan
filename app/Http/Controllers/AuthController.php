@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 
+
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        Session::flash('email',$request->email);
+        Session::flash('email', $request->email);
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:8'
+            'email' => 'required|email',
+            'password' => 'required|min:8'
         ]);
 
         $data = [
@@ -27,8 +28,11 @@ class AuthController extends Controller
         ];
 
         if (Auth::Attempt($data)) {
+            $user = User::find(Auth::user()->id);
+            $user->status = 'online';
+            $user->save();
             return redirect()->route('welcome')->with('message', 'Wellcome to SiIkan')->with('icon', 'success');
-        }else{
+        } else {
             return redirect()->route('login')->with('message', 'email and password is not valid')->with('icon', 'error');
         }
     }
@@ -56,39 +60,46 @@ class AuthController extends Controller
             'address' => $request->address ?? null,
         ]);
 
-        if($user){
-            return redirect()->route('login')->with('message','Register success, please login')->with('icon', 'success');
-        }else{
-            return redirect()->route('register')->with('message','Register failed, please try again')->with('icon', 'error');
+        if ($user) {
+            return redirect()->route('login')->with('message', 'Register success, please login')->with('icon', 'success');
+        } else {
+            return redirect()->route('register')->with('message', 'Register failed, please try again')->with('icon', 'error');
         }
     }
 
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return redirect()->route('welcome')->with('message', 'Logout success')->with('icon', 'success');
+        $user = User::find(Auth::user()->id);
+        $user->status = 'offline';
+        $user->save();
+
+
+        if($user){
+            $logout = Auth::logout();
+            return redirect()->route('login')->with('message', 'Logout success')->with('icon', 'success');
+        } else {
+            return redirect()->route('welcome')->with('message', 'Logout failed')->with('icon', 'error');
+        }
     }
 
 
-    public function ProsesAdminlogin( Request $request)
+    public function ProsesAdminlogin(Request $request)
     {
-        Session::flash('email',$request->email);
+        Session::flash('email', $request->email);
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:8'
+            'email' => 'required|email',
+            'password' => 'required|min:8'
         ]);
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
             // Authentication passed, redirect to the admin dashboard
-            return redirect()->route('admin.dashboard')->with('success', 'Welcome back, Admin!');
+            return redirect()->route('admin.dashboard')->with('message', 'Welcome back, Admin!')->with('icon', 'success');
         }
 
-        return back()->with('error', 'Email atau password salah.');
+        return back()->with('message', 'Email atau password salah.')->with('icon', 'error');
     }
-
-
 
 }

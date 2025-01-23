@@ -2,100 +2,13 @@
 
 @section('content')
 
-<div id="content">
-    <!-- TopBar -->
-    <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-        <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-search fa-fw"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                    aria-labelledby="searchDropdown">
-                    <form class="navbar-search" action="" method="get">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-1 small"
-                                placeholder="What do you want to look for?" aria-label="Search"
-                                aria-describedby="basic-addon2" style="border-color: #3f51b5;">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
+{{-- <div id="content"> --}}
 
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <!-- Topbar -->
-    <!-- Container Fluid-->
+
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#fishModal">Add Fish</button>
-
-            <div class="modal fade" id="fishModal" tabindex="-1" role="dialog" aria-labelledby="fishModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="fishModalLabel">Add Fish</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="fishForm" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="species">Species</label>
-                                    <input type="text" class="form-control" name="species" id="species" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="weight">Weight (kg)</label>
-                                    <input type="number" class="form-control" name="weight" id="weight" required step="0.01">
-                                </div>
-                                <div class="form-group">
-                                    <label for="length">Length (cm)</label>
-                                    <input type="number" class="form-control" name="length" id="length" required step="0.01">
-                                </div>
-                                <div class="form-group">
-                                    <label for="image">Image</label>
-                                    <input type="file" class="form-control" name="image" id="image" accept="image/*">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+                id="#modalCenter">Add Data</button>
 
             <h1 class="h3 mb-0 text-gray-800 text-gradient">Data Product</h1>
             <ol class="breadcrumb">
@@ -111,31 +24,102 @@
 
                 <div class="card mb-4">
                     <div class="table-responsive p-3">
-                        <table class="table align-items-center table-flush" id="dataTable">
+                        <table class="table align-items-center table-flush" id="dataTable" data-page-length='5'>
                             <thead class="thead-light">
                                 <tr>
-                                    <th>Nama Ikan</th>
-                                    <th>Jenis Ikan</th>
-                                    <th>Berat Ikan</th>
-                                    <th>Harga</th>
-                                    <th>Gambar</th>
-                                    <th>Action</th>
+                                    <th style="background-color: #6777f0; color: white;">No</th>
+                                    <th style="background-color: #6777f0; color: white;">Nama Ikan</th>
+                                    <th style="background-color: #6777f0; color: white;">Deskripsi</th>
+                                    <th style="background-color: #6777f0; color: white;">Stock Ikan</th>
+                                    <th style="background-color: #6777f0; color: white;">Harga</th>
+                                    <th style="background-color: #6777f0; color: white;">Gambar</th>
+                                    <th style="background-color: #6777f0; color: white;">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @forelse ($products as $item)
+                                @forelse ($products as $no => $item)
+
                                 <tr class="text-capitalize">
-                                    <td>{{ $item->nama_ikan }}</td>
-                                    <td>{{ $item->jenis_ikan }}</td>
-                                    <td>{{ $item->berat_ikan }}</td>
+                                    <td>{{ $no + 1 }}</td>
+                                    <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->deskripsi }}</td>
+                                    <td>{{ $item->stock }} Kg</td>
                                     <td>Rp {{ $item->harga }}</td>
-                                    <td>{{ $item->gambar }}</td>
+                                    <td><img src="{{ asset( $item->gambar) }}" alt=""
+                                            style="max-width: 100px; height: auto;"></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"></i>
-                                            Edit</a>
-                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>
-                                            Hapus</button>
+                                        <a href="#" class="btn btn-sm btn-warning me-1" data-toggle="modal"
+                                            data-target="#exampleModalCenterUpdate{{ $item->id }}" id="#modalCenter"><i
+                                                class="fas fa-edit"></i>
+                                        </a>
+
+                                        <!-- Modal update -->
+                                        <div class="modal fade" id="exampleModalCenterUpdate{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <form id="fishForm" enctype="multipart/form-data" method="POST"
+                                                            action="{{ route('admin.product.update' , $item->id) }}">
+                                                            @csrf
+                                                            <input type="hidden" name="id" id="p_id"
+                                                                value="{{ $item->id }}">
+                                                            <div class="form-group">
+                                                                <label for="name">Nama</label>
+                                                                <input type="text" class="form-control" name="nama"
+                                                                    id="name" required value="{{ $item->nama }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="species">Deskripsi</label>
+                                                                <textarea name="deskripsi" class="form-control"
+                                                                    id="species" cols="30"
+                                                                    rows="2">{{ $item->deskripsi }}</textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="Stock">Stock</label>
+                                                                <input type="number" class="form-control" name="stock"
+                                                                    id="Stock" inputmode="numeric" required step="0.01"
+                                                                    value="{{ $item->stock }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="Stock">Minimal Order</label>
+                                                                <input type="number" class="form-control" name="min_order"
+                                                                    id="Stock" inputmode="numeric" required step="0.01"
+                                                                    value="{{ $item->min_order }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="Harga">Harga</label>
+                                                                <input type="number" class="form-control" name="harga"
+                                                                    id="Harga" required step="0.01"
+                                                                    value="{{ $item->harga }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="image">Image</label><br>
+                                                                <img src="{{ asset( $item->gambar) }}" alt=""
+                                                                    style="max-width: 80px; height: auto;">
+                                                                <input type="file" class="form-control" name="image"
+                                                                    id="image" accept="image/*">
+                                                            </div>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Submit</button>
+                                                            <button type="button" class="btn btn-outline-primary"
+                                                                data-dismiss="modal">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form action="{{ route('admin.product.delete', encrypt($item->id)) }}"
+                                            method="POST" class="d-inline delete-form" style="display: none">
+                                            @csrf
+                                            <input type="hidden" name="id" id="p_id" value="{{ $item->id }}">
+                                            <button class="btn btn-sm btn-danger delete" type="button"
+                                                onclick="confirmDelete(this)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty
@@ -172,8 +156,79 @@
             </div>
         </div>
 
+        <!-- Modal create -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    {{-- <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div> --}}
+                    <div class="modal-body">
+                        <form id="fishForm" enctype="multipart/form-data" method="POST"
+                            action="{{ route('admin.product.create') }}">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Nama</label>
+                                <input type="text" class="form-control" name="nama" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="species">Deskripsi</label>
+                                <textarea name="deskripsi" class="form-control" id="species" cols="30"
+                                    rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="Stock">Stock</label>
+                                <input type="number" class="form-control" name="stock" id="Stock" inputmode="numeric"
+                                    required step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="Stock">Minimal Order</label>
+                                <input type="number" class="form-control" name="min_order" id="Stock" inputmode="numeric"
+                                    required step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="Harga">Harga</label>
+                                <input type="number" class="form-control" name="harga" id="Harga" required step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!---Container Fluid-->
-</div>
+{{-- </div> --}}
 
+{{-- //sweet alert --}}
+<script>
+    function confirmDelete(button) {
+        // Show SweetAlert confirmation
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            button.closest('.delete-form').submit();
+        }else{
+            swal("Your item is safe!");
+        }
+        });
+
+    }
+</script>
 @endsection

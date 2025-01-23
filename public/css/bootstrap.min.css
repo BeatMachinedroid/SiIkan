@@ -7130,3 +7130,92 @@ button.close {
     }
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+.card {
+    background-color: white; /* Card background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* Prevents overflow of child elements */
+    width: 100%; /* Fixed width */
+    transition: transform 0.2s; /* Smooth scaling effect */
+}
+
+.card-body {
+    padding: 16px; /* Padding inside the card */
+}
+
+.card-title {
+    font-size: 1.25rem; /* Title font size */
+    margin: 0 0 8px; /* Margin below the title */
+}
+
+.card-text {
+    font-size: 1rem; /* Text font size */
+    color: #6c757d; /* Text color */
+    margin-bottom: 16px; /* Margin below the text */
+}
+
+.card-button {
+    display: inline-block; /* Inline block for button */
+    padding: 10px 20px; /* Padding for button */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 4px; /* Rounded corners for button */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.card-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.badge {
+    display: inline-block; /* Inline block for badges */
+    padding: 8px 12px; /* Padding for badges */
+    border-radius: 12px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    color: white; /* Text color */
+    margin: 5px; /* Margin around badges */
+    text-align: center; /* Center text */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.badge-primary {
+    background-color: #007bff; /* Primary color */
+}
+
+.badge-secondary {
+    background-color: #6c757d; /* Secondary color */
+}
+
+.badge-success {
+    background-color: #28a745; /* Success color */
+}
+
+.badge-danger {
+    background-color: #dc3545; /* Danger color */
+}
+
+.badge-warning {
+    background-color: #ffc107; /* Warning color */
+    color : black;
+}
+
+.badge-info {
+    background-color: #17a2b8; /* Info color */
+}
+
+.badge-light {
+    background-color: #f8f9fa; /* Light color */
+    color: #212529; /* Dark text for light badge */
+}
+
+.badge-dark {
+    background-color: #343a40; /* Dark color */
+}
+
+/* Optional: Hover effect */
+.badge:hover {
+    opacity: 0.8; /* Slightly transparent on hover */
+}

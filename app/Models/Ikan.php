@@ -10,6 +10,24 @@ class Ikan extends Model
     use HasFactory;
 
     protected $table = 'ikans';
-    protected $fillable = ['nama_ikan', 'jenis_ikan', 'gambar','berat_ikan','harga'];
 
+    protected $fillable = [
+        'nama',
+        'deskripsi',
+        'stock',
+        'min_pembelian',
+        'harga',
+        'gambar',
+    ];
+
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'product_id', 'id');
+    }
+
+    public function pembelians()
+    {
+        return $this->hasMany(Pembelian::class, 'ikan_id', 'id');
+    }
 }

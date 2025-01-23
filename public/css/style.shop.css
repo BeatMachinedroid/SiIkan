@@ -5,6 +5,7 @@ Colors:
 	Primary 	: #D10024
 	Dark 		: #15161D ##1E1F29
 	Grey 		: #E4E7ED #FBFBFC #8D99AE #B9BABC
+    Footer      : #243e59
 
 Fonts: Montserrat
 
@@ -393,11 +394,6 @@ textarea.input {
 	Top header
 \*----------------------------*/
 
-#top-header {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #1e1f29;
-}
 
 .header-links li {
     display: inline-block;
@@ -429,7 +425,8 @@ textarea.input {
 #header {
     padding-top: 15px;
     padding-bottom: 15px;
-    background-color: #19247d;
+    background-color: #243e59;
+    /* background-color: #15161d;; */
 }
 
 .header-logo {
@@ -777,10 +774,14 @@ textarea.input {
     padding: 60px 0px;
     margin: 30px 0px;
     background-color: #e4e7ed;
-    background-image: url("../img/hotdeal.png");
+    /* background-image: url("../img/budidaya.jpg"); */
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
 }
+
 
 .hot-deal {
     text-align: center;
@@ -2007,8 +2008,9 @@ textarea.input {
 ===========================================================*/
 
 #footer {
-    background: #15161d;
+    /* background: #15161d; */
     color: #b9babc;
+    background: #243e59;
 }
 
 #bottom-footer {
@@ -2205,3 +2207,22 @@ textarea.input {
     }
 }
 
+/* table */
+
+th, td {
+    padding: 8px;
+
+}
+table img {
+    width: 50px;
+    height: auto;
+}
+
+table th {
+    background-color: #243e59;
+    color: white;
+}
+
+#map {
+    height: 260px;
+}

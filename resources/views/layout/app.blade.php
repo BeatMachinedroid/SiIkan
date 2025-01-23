@@ -18,18 +18,27 @@
 </head>
 
 <body id="page-top">
+    @if (Session::has('message') && Session::has('icon'))
+    <script>
+        Swal.fire({
+    position: "top-end",
+    icon: "{{ Session::get('icon') }}",
+    title: "{{ Session::get('message') }}",
+    showConfirmButton: false,
+    timer: 1500
+});
+    </script>
 
+    @endif
     <div id="wrapper">
 
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
-                <div class="sidebar-brand-icon">
-                    <img src="assetss/img/logo/logo2.png">
-                </div>
-                <div class="sidebar-brand-text mx-3">RuangAdmin</div>
+
+                <div class="sidebar-brand-text mx-3">SiIkan Admin</div>
             </a>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
+            <li class="nav-item {{ Route::currentRouteNamed('admin.dashboard') ? 'active' : ''  }}">
                 <a class="nav-link" href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -38,24 +47,67 @@
             <div class="sidebar-heading">
                 Features
             </div>
-            <li class="nav-item {{ Route::currentRouteName() == 'product' ? 'active' : '' }}">
-                <a class="nav-link" href="/product">
+            <li class="nav-item {{ Route::currentRouteNamed('admin.product') ? 'active' : ''  }}">
+                <a class="nav-link" href="{{ route('admin.product') }}">
                     <i class="fas fa-fw fa-fish"></i>
                     <span>Product</span></a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'orders' ? 'active' : '' }}">
-                <a class="nav-link" href="/product">
+            <li class="nav-item {{ Route::currentRouteNamed('admin.order') ||  Route::currentRouteNamed('admin.detail.order') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.order') }}">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Orders</span></a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'orders' ? 'active' : '' }}">
-                <a class="nav-link" href="/product">
-                    <i class="fab fa-fw fa-wpforms"></i>
-                    <span>Setting</span></a>
+            <li class="nav-item {{ Route::currentRouteNamed('admin.user') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.user') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Users</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
+                  aria-controls="collapseTable">
+                  <i class="fas fa-fw fa-table"></i>
+                  <span>Setting</span>
+                </a>
+                <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Seting Web</h6>
+                    <a class="collapse-item" href="{{ route('admin.toko') }}">Informasi Toko</a>
+                    <a class="collapse-item" href="{{ route('admin.ongkir') }}">Ongkir</a>
+                  </div>
+                </div>
+              </li>
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- TopBar -->
+            <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <ul class="navbar-nav ml-auto">
+                    {{-- <div class="topbar-divider d-none d-sm-block"></div> --}}
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="ml-2 d-none d-lg-inline text-white small text-uppercase">{{ Auth::guard('admin')->user()->name }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Edit Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal"
+                                data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
 
             @yield('content')
 
@@ -65,8 +117,7 @@
                     <div class="copyright text-center my-auto">
                         <span>copyright &copy; <script>
                                 document.write(new Date().getFullYear());
-                            </script> - developed by
-                            <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
+                            </script>
                         </span>
                     </div>
                 </div>

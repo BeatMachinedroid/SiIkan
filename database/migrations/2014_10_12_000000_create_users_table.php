@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('telephone');
             $table->string('email')->unique();
             $table->string('address');
+            $table->enum('status', ['online', 'offline'])->default('offline');
             $table->string('password');
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class IsUser
 {
@@ -20,6 +21,12 @@ class IsUser
             return $next($request);
         }
 
-        return redirect('/login')->with('error', 'Anda belum login.');
+        $user = User::find(Auth::user()->id);
+        if ($user) {
+            $user->status = 'offline';
+            $user->save();
+            return redirect('/login')->with('error', 'Anda belum login.');
+        }
+
     }
 }

@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('ikans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_ikan');
-            $table->string('jenis_ikan');
+            $table->string('nama');
+            $table->string('deskripsi');
+            $table->string('stock');
+            $table->integer('min_pembelian');
+            $table->char('harga');
             $table->text('gambar');
-            $table->string('berat_ikan');
-            $table->decimal('harga', 10, 2);
             $table->timestamps();
         });
     }

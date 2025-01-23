@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('12345678'),
                 'telephone' => '12345678',
                 'address' => 'user address',
+                'status' => 'online',
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d')
             ]
