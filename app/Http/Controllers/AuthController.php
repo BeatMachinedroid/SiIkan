@@ -102,4 +102,9 @@ class AuthController extends Controller
         return back()->with('message', 'Email atau password salah.')->with('icon', 'error');
     }
 
+    public function logout_admin(){
+        $admin = Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+    }
+
 }

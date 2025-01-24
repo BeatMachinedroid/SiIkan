@@ -54,7 +54,7 @@ class OrderController extends Controller
     public function konfirmasi($id){
 
         $data_bayar = Pembayaran::where('kode_order' , $id)->update([
-            'status' => 'selesai'
+            'status' => 'pengiriman'
         ]);
 
         $data_order = Pembelian::where('kode_order' , $id)->update([

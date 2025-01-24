@@ -51,15 +51,16 @@ class CheckoutController extends Controller
         $orderCount = Pembelian::with('ikan')->with('user')->whereDate('created_at', Carbon::now())->orderBy('id', 'desc')->count() + 1;
         $kode = "OR-" . $date . "-" . str_pad($orderCount, 5, '0', STR_PAD_LEFT);
         $cart = Cart::where('user_id', Auth::id())->get();
+        $ongkir = 0;
         $ongkir = Ongkir::where('jenis', $request->payment)->first();
         if ($request->payment == 'transfer') {
             $newDate = Carbon::now()->addDays(3);
             $status = 'Tertunda';
-            $ongkir = $ongkir->ongkir;
+            $ongkir = $ongkir->ongkir ?? 0;
         } else {
             $newDate = Carbon::now();
             $status = 'Pembayaran Ditempat (COD)';
-            $ongkir = $ongkir->ongkir;
+            $ongkir = $ongkir->ongkir ?? 0;
         }
 
         foreach ($cart as $item) {

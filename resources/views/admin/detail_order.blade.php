@@ -124,7 +124,7 @@
                             <tr>
                                 <td>Status Pembayaran</td>
                                 <td>
-                                    @if ($item->metode == 'transfer' && $item->status_pembayaran == null)
+                                    @if ($item->status_pembayaran == 'Tertunda')
                                     <span class="badge badge-warning">Tertunda</span>
                                     @elseif($item->metode == 'cod')
                                     <span class="badge badge-success">Pembayaran Ditempat (COD)</span>
@@ -177,19 +177,14 @@
                     <table class="table align-items-center table-flush">
                         <tbody>
                             @foreach ($pembayaran as $item)
-                            @if ($item->bukti_pembayaran == '' && $item->tanggal_pembayaran == null)
-                            <tr>
-                                <td class="alert alert-danger" role="alert">
-                                    Tidak Ada Data Pembayaran
-                                </td>
-                            </tr>
-                            @elseif($item->bukti_pembayaran == '' && $item->status == 'Pembayaran Ditempat (COD)')
+
+                            @if($item->status == 'Pembayaran Ditempat (COD)')
                             <tr>
                                 <td class="alert alert-success" role="alert">
                                     Pembayaran Ditempat (COD)
                                 </td>
                             </tr>
-                            @elseif($item->status == null)
+                            @elseif($item->status == "Diproses")
                             <tr>
                                 <td class="alert alert-warning" role="alert" colspan="2">
                                     Please Confirmasi Pembayaran
@@ -207,6 +202,12 @@
                                 <td>
                                     <a href="{{ route('admin.order.konfirmasi.gagal', $item->kode_order) }}"
                                         class="btn btn-danger">Gagalkan</a>
+                                </td>
+                            </tr>
+                            @elseif($item->status == "Tertunda")
+                            <tr>
+                                <td class="alert alert-danger" role="alert">
+                                    Tidak Ada data pembayaran
                                 </td>
                             </tr>
                             @else

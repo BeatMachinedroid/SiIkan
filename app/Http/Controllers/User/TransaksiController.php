@@ -38,7 +38,7 @@ class TransaksiController extends Controller
         )
             ->join('ikans', 'pembelians.id_ikan', '=', 'ikans.id') // Bergabung dengan tabel ikans
             ->join('users', 'pembelians.id_user', '=', 'users.id') // Bergabung dengan tabel users
-            ->groupBy('kode_order')
+            ->groupBy('kode_order')->orderBy('kode_order', 'desc')
             ->get();
 
         return view(
@@ -120,6 +120,12 @@ class TransaksiController extends Controller
         if ($bayar->status == 'Pembayaran Ditempat (COD)') {
             $bayar->update([
                 'tanggal_pembayaran' => Carbon::now(),
+                'status' => 'selesai',
+            ]);
+        }else{
+            $bayar->update([
+                'tanggal_pembayaran' => Carbon::now(),
+                'status' => 'selesai',
             ]);
         }
 

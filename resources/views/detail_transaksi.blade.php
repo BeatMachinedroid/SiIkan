@@ -75,7 +75,7 @@
                         </thead>
                         <tbody>
                             @foreach ($pembayaran as $item)
-                            @if ($item->bukti_pembayaran == null && $item->status == 'Tertunda')
+                            @if ($item->status == 'Tertunda')
                             <tr>
                                 <td colspan="2">
                                     <div class="alert alert-danger" role="alert">
@@ -85,34 +85,35 @@
                             </tr>
                             <tr class="text-center">
                                 <td>
-                                    <form action="{{ route('user.upload.bukti') }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('user.upload.bukti') }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
-                                        <input type="text" name="kode_order" value="{{ $item->kode_order }}" style="display: none">
+                                        <input type="text" name="kode_order" value="{{ $item->kode_order }}"
+                                            style="display: none">
                                         <div class="form-group">
-                                            <input type="file" class="form-control" name="bukti" id="image" accept="image/*">
+                                            <input type="file" class="form-control" name="bukti" id="image"
+                                                accept="image/*">
                                         </div>
                                         <button type="submit" class="btn btn-primary">Upload Bukti Pembayaran</button>
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            data-dismiss="modal">Cancel</button>
                                     </form>
                                 </td>
                             </tr>
-                            @elseif($item->status == 'Tertunda')
+                            @elseif($item->status == 'Diproses')
                             <td colspan="2">
-                                <div class="alert alert-success" role="alert">
-                                    Pembayaran telah dikonfirmasi, tekan barang diterima setelah menerima barang!
+                                <div class="alert alert-warning" role="alert">
+                                    Pending, menunggu konfirmasi pembayaran!
                                 </div>
                             </td>
                             <tr>
                                 <td class="text-center">
-                                    <img src="{{ asset($item->bukti_pembayaran) }}" alt="" style="height: 200px; width: auto;" >
+                                    <img src="{{ asset($item->bukti_pembayaran) }}" alt=""
+                                        style="height: 200px; width: auto;">
                                 </td>
                             </tr>
-                            <tr class="text-center">
-                                <td>
-                                    <a href="{{ route('user.konfirmasi.barang', $item->kode_order) }}" class="btn btn-primary">Barang Diterima</a>
-                                </td>
-                            </tr>
-                            @elseif($item->status == "Pembayaran Ditempat (COD)" && $item->tanggal_pembayaran == null)
+
+                            @elseif($item->status == "Pembayaran Ditempat (COD)")
                             <tr>
                                 <td colspan="2">
                                     <div class="alert alert-success" role="alert">
@@ -122,28 +123,30 @@
                             </tr>
                             <tr class="text-center">
                                 <td>
-                                    <a href="{{ route('user.konfirmasi.barang', $item->kode_order) }}" class="btn btn-primary">Barang Diterima</a>
+                                    <a href="{{ route('user.konfirmasi.barang', $item->kode_order) }}"
+                                        class="btn btn-primary">Barang Diterima</a>
                                 </td>
                             </tr>
-                            @elseif($item->status == "Pembayaran Ditempat (COD)" && $item->tanggal_pembayaran !== null)
+                            @elseif($item->status == "pengiriman")
                             <tr>
                                 <td colspan="2">
                                     <div class="alert alert-success" role="alert">
-                                        Pembayaran telah dikonfirmasi, barang diterima!
+                                        Pembayaran telah dikonfirmasi, tekan barang diterima setelah menerima barang!
                                     </div>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <a href="{{ route('user.konfirmasi.barang', $item->kode_order) }}"
+                                        class="btn btn-primary">Barang Diterima</a>
                                 </td>
                             </tr>
                             @else
                             <tr>
                                 <td colspan="2">
                                     <div class="alert alert-success" role="alert">
-                                        Pembayaran telah dikonfirmasi, barang diterima!
+                                        Pembayaran telah dikonfirmasi, barang telah diterima!
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="{{ asset($item->bukti_pembayaran) }}" alt="" style="height: 200px; width: auto;" >
                                 </td>
                             </tr>
                             @endif
@@ -214,7 +217,7 @@
                             <tr>
                                 <td>Status Pembayaran</td>
                                 <td>
-                                    @if ($item->metode == 'transfer' && $item->status_pembayaran == null)
+                                    @if ($item->status_pembayaran == 'Tertunda')
                                     <span class="badge badge-warning">Tertunda</span>
                                     @elseif($item->metode == 'cod')
                                     <span class="badge badge-success">Pembayaran Ditempat (COD)</span>

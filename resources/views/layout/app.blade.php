@@ -52,7 +52,8 @@
                     <i class="fas fa-fw fa-fish"></i>
                     <span>Product</span></a>
             </li>
-            <li class="nav-item {{ Route::currentRouteNamed('admin.order') ||  Route::currentRouteNamed('admin.detail.order') ? 'active' : '' }}">
+            <li
+                class="nav-item {{ Route::currentRouteNamed('admin.order') ||  Route::currentRouteNamed('admin.detail.order') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.order') }}">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Orders</span></a>
@@ -63,19 +64,19 @@
                     <span>Users</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-                  aria-controls="collapseTable">
-                  <i class="fas fa-fw fa-table"></i>
-                  <span>Setting</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
+                    aria-expanded="true" aria-controls="collapseTable">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Setting</span>
                 </a>
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Seting Web</h6>
-                    <a class="collapse-item" href="{{ route('admin.toko') }}">Informasi Toko</a>
-                    <a class="collapse-item" href="{{ route('admin.ongkir') }}">Ongkir</a>
-                  </div>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Seting Web</h6>
+                        <a class="collapse-item" href="{{ route('admin.toko') }}">Informasi Toko</a>
+                        <a class="collapse-item" href="{{ route('admin.ongkir') }}">Ongkir</a>
+                    </div>
                 </div>
-              </li>
+            </li>
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
@@ -90,16 +91,14 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="ml-2 d-none d-lg-inline text-white small text-uppercase">{{ Auth::guard('admin')->user()->name }}</span>
+                            <span class="ml-2 d-none d-lg-inline text-white small text-uppercase">{{
+                                Auth::guard('admin')->user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Edit Profile
-                            </a>
+
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal"
+                            <a class="dropdown-item" href="" data-toggle="modal"
                                 data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
@@ -111,7 +110,27 @@
 
             @yield('content')
 
-
+            <!-- Modal Logout -->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to logout?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                            <a href="{{ route('admin.logout') }}" class="btn btn-primary">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">

@@ -67,7 +67,9 @@ Route::get('/admin', function () {
 Route::post('/proses/login', [AuthController::class, 'ProsesAdminlogin'])->name('proses.admin.login');
 
 Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
+    Route::get('/logout/proses', [AuthController::class, 'logout_admin'])->name('admin.logout');
     Route::get('/dashboard', [DashboardControllers::class, 'index'])->name('admin.dashboard');
+
     // product
     Route::get('/product', [ProductController::class, 'index'])->name('admin.product');
     Route::post('/product/create', [ProductController::class, 'store'])->name('admin.product.create');
