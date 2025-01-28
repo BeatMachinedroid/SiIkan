@@ -12,6 +12,7 @@ class Ikan extends Model
     protected $table = 'ikans';
 
     protected $fillable = [
+        'id_cate',
         'nama',
         'deskripsi',
         'stock',
@@ -29,5 +30,10 @@ class Ikan extends Model
     public function pembelians()
     {
         return $this->hasMany(Pembelian::class, 'ikan_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'id_cate');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesControllers;
 use App\Http\Controllers\Admin\DashboardControllers;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,7 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\User\TransaksiController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -36,10 +38,12 @@ Route::post('/proses_register', [AuthController::class, 'register'])->name('pros
 Route::get('/', [UserProductController::class, 'index'])->name('welcome');
 Route::get('/product', [UserProductController::class, 'show'])->name('product.show');
 Route::post('/product/search', [SearchController::class, 'product_search'])->name('product.search');
+Route::get('/product/search/{nama}', [SearchController::class, 'search'])->name('search.product');
 Route::get('/product/detail/{id}', [UserProductController::class, 'detail_product'])->name('product.detail');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/invoice/{kode_order}', [InvoiceController::class, 'show'])->name('invoice.show');
 
     // Cart
     Route::post('/product/cart/proses', [CartController::class, 'create'])->name('product.add.cart');
@@ -75,6 +79,12 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::post('/product/create', [ProductController::class, 'store'])->name('admin.product.create');
     Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
     Route::post('/product/delete/{id}', [ProductController::class, 'destroy'])->name('admin.product.delete');
+
+    // category
+    Route::get('/category', [CategoriesControllers::class, 'index'])->name('admin.category');
+    Route::post('/category/create', [CategoriesControllers::class, 'store'])->name('admin.create.categories');
+    Route::post('/category/update/{id}', [CategoriesControllers::class, 'update'])->name('admin.categories.update');
+    Route::post('/category/delete/{id}', [CategoriesControllers::class, 'destroy'])->name('admin.categories.delete');
 
     // Order
     Route::get('/Order', [OrderController::class, 'index'])->name('admin.order');

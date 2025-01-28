@@ -228,7 +228,7 @@
                             </tr>
                             <tr>
                                 <td>Cetak Invoice</td>
-                                <td><a href="" class="btn btn-primary">cetak</a>
+                                <td><a href="{{ route('invoice.show', $item->kode_order) }}" class="btn btn-primary">cetak</a>
                             </tr>
                             @endforeach
                         </tbody>

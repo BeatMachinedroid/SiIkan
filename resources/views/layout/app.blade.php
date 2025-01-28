@@ -47,6 +47,11 @@
             <div class="sidebar-heading">
                 Features
             </div>
+            <li class="nav-item {{ Route::currentRouteNamed('admin.category') ? 'active' : ''  }}">
+                <a class="nav-link" href="{{ route('admin.category') }}">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span>Category</span></a>
+            </li>
             <li class="nav-item {{ Route::currentRouteNamed('admin.product') ? 'active' : ''  }}">
                 <a class="nav-link" href="{{ route('admin.product') }}">
                     <i class="fas fa-fw fa-fish"></i>

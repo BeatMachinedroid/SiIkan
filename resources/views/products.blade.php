@@ -20,7 +20,45 @@
     <div class="container">
         <!-- row -->
         <div class="row">
+            <div id="aside" class="col-md-3">
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Kategori</h3>
+                    @foreach ($categories as $item)
+                    <div class="checkbox-filter">
+                        <div class="input-checkbox">
+                            <i class="fa fa-caret-down"></i>
+                            <a href="{{ route('search.product',$item->nama) }}">
+                                <label for="category-1">
+                                    <span></span>
+                                    {{ $item->nama }}
+                                    <small>( {{ $item->ikan_count }} )</small>
+                                </label>
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <!-- /aside Widget -->
 
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Top selling</h3>
+                    @foreach ($top_sell as $item)
+                    <div class="product-widget">
+                        <div class="product-img">
+                            <img src="{{ asset($item->ikan->gambar) }}" alt="">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name"><a href="{{ route('product.detail', encrypt($item->id_ikan)) }}">{{ $item->ikan->nama }}</a></h3>
+                            <h4 class="product-price">Rp. {{ $item->ikan->harga }}</h4>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
+                <!-- /aside Widget -->
+            </div>
 
             <div id="store" class="col-md-9">
                 <!-- store products -->
@@ -37,15 +75,18 @@
                             </div>
                             <div class="product-body">
                                 <p class="product-category">{{ $item->deskripsi }}</p>
-                                <h3 class="product-name"><a href="{{ route('product.detail' , encrypt($item->id)) }}">{{ $item->nama }}</a></a></h3>
+                                <h3 class="product-name"><a href="{{ route('product.detail' , encrypt($item->id)) }}">{{
+                                        $item->nama }}</a></a></h3>
                                 <h4 class="product-price">Rp. {{ $item->harga }}</h4>
                             </div>
                             <div class="add-to-cart">
                                 @if (Auth::check())
                                 <form action="{{ route('product.add.cart') }}" method="POST">
                                     @csrf
-                                    <input type="text" name="product_id" value="{{ encrypt($item->id) }}" style="display: none">
-                                    <input type="text" name="user_id" value="{{ encrypt( Auth::user()->id) }}" style="display: none">
+                                    <input type="text" name="product_id" value="{{ encrypt($item->id) }}"
+                                        style="display: none">
+                                    <input type="text" name="user_id" value="{{ encrypt( Auth::user()->id) }}"
+                                        style="display: none">
                                     <input type="text" name="jumlah" value="1" style="display: none">
 
                                     <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
@@ -88,5 +129,6 @@
     </div>
     <!-- /container -->
 </div>
+
 
 @endsection

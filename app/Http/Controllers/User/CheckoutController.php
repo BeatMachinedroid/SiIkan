@@ -69,7 +69,7 @@ class CheckoutController extends Controller
                 'id_ikan' => $item->product_id,
                 'kode_order' => $kode,
                 'jumlah' => $item->quantity,
-                'total_harga' => $item->total,
+                'total_harga' => $request->total,
                 'alamat' => $request->alamat.'  kota : '. $request->kota,
                 'no_telpon' => $request->no_telp,
                 'ongkir' => $ongkir,

@@ -24,7 +24,7 @@ class DashboardControllers extends Controller
             MONTH(created_at) as month,
             YEAR(created_at) as year,
             sum(jumlah) as banyak_terjual'
-        )->where('status_pembayaran', 'selesai')->groupBy('month', 'year')
+        )->where('status_order', 'selesai')->groupBy('month', 'year')
             ->get();
         $newuser = User::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         $pendingreq = Pembelian::selectRaw(

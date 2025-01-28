@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SiIkan.com</title>
+    <title>SiIkan</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
@@ -239,7 +239,6 @@
         </div>
         <!-- /bottom footer -->
     </footer>
-
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/slick.min.js') }}"></script>

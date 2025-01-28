@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Ikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,8 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Ikan::all();
-        return view('admin.product', compact('products'));
+        $products = Ikan::with('categories')->get();
+        $categories = Category::all();
+        return view('admin.product', compact('products','categories'));
     }
 
     /**
@@ -25,8 +27,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama' => 'required',
+            'category' => 'required',
             'deskripsi' => 'required|text:255',
             'stock' => 'required|numeric',
             'min_order' => 'required|numeric',
@@ -38,11 +41,12 @@ class ProductController extends Controller
         //     return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
         // }
 
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images/product'), $imageName);
-        $image_url = 'images/product/'.$imageName;
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/product/'), $imageName);
+        $image_url = 'images/product/' . $imageName;
         $product = Ikan::create([
             'nama' => $request->nama,
+            'id_cate' => $request->category,
             'deskripsi' => $request->deskripsi,
             'stock' => $request->stock,
             'min_pembelian' => $request->min_order,
@@ -61,9 +65,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->hasFile('gambar')){
-            $validator = Validator::make($request->all(),[
+        if ($request->hasFile('gambar')) {
+            $validator = Validator::make($request->all(), [
                 'nama' => 'required',
+                'category' => 'required',
                 'deskripsi' => 'required',
                 'stock' => 'required|numeric',
                 'min_order' => 'required|numeric',
@@ -74,12 +79,13 @@ class ProductController extends Controller
                 return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
             }
 
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images/product'), $imageName);
-            $image_url = 'images/product/'.$imageName;
+            $image_url = 'images/product/' . $imageName;
             $product = Ikan::find($id);
             $product->update([
                 'nama' => $request->nama,
+                'id_cate' => $request->category,
                 'deskripsi' => $request->deskripsi,
                 'stock' => $request->stock,
                 'min_pembelian' => $request->min_order,
@@ -92,8 +98,9 @@ class ProductController extends Controller
                 return redirect()->route('admin.product')->with('message', 'Failed to update product')->with('icon', 'error');
             }
         } else {
-            $validator = Validator::make($request->all(),[
+            $validator = Validator::make($request->all(), [
                 'nama' => 'required',
+                'category' => 'required',
                 'deskripsi' => 'required',
                 'stock' => 'required|numeric',
                 'min_order' => 'required|numeric',
@@ -105,6 +112,7 @@ class ProductController extends Controller
             $product = Ikan::find($id);
             $product->update([
                 'nama' => $request->nama,
+                'id_cate' => $request->category,
                 'deskripsi' => $request->deskripsi,
                 'stock' => $request->stock,
                 'min_pembelian' => $request->min_order,
@@ -126,7 +134,7 @@ class ProductController extends Controller
     {
         $ikan = Ikan::find(decrypt($id));
         $ikan->delete();
-        if($ikan){
+        if ($ikan) {
             return redirect()->route('admin.product')->with('message', 'Product deleted successfully')->with('icon', 'success');
         } else {
             return redirect()->route('admin.product')->with('message', 'Failed to delete product')->with('icon', 'error');
