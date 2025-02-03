@@ -13,6 +13,8 @@
     <link href="{{ asset('assetss/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assetss/css/ruang-admin.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assetss/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap DatePicker -->
+    <link href="{{ asset('assetss/vendor/bootstrap-datepicker/css/bootstrap-datepicker.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
@@ -29,11 +31,12 @@
 });
     </script>
 
+
     @endif
     <div id="wrapper">
 
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
 
                 <div class="sidebar-brand-text mx-3">SiIkan Admin</div>
             </a>
@@ -66,8 +69,19 @@
             <li class="nav-item {{ Route::currentRouteNamed('admin.user') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.user') }}">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Users</span></a>
+                    <span>Costumers</span></a>
             </li>
+            <li class="nav-item {{ Route::currentRouteNamed('admin.product.most.buying') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.product.most.buying') }}">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span>Product most buying</span></a>
+            </li>
+            <li class="nav-item {{ Route::currentRouteNamed('admin.earnings.report') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.earnings.report') }}">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span>Earnings ( MONTHLY )</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
                     aria-expanded="true" aria-controls="collapseTable">
@@ -103,8 +117,7 @@
                             aria-labelledby="userDropdown">
 
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="" data-toggle="modal"
-                                data-target="#logoutModal">
+                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
@@ -164,13 +177,25 @@
     <script src="{{ asset('assetss/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assetss/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assetss/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assetss/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
-          $('#dataTable').DataTable();
-          $('#dataTableHover').DataTable();
+        $('#dataTable').DataTable();
+        $('#dataTables').DataTable({
+            searching : false
+        });
         });
     </script>
+
+<script>
+    $('#simple-date4 .input-daterange').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true,
+        todayBtn: 'linked',
+      });
+</script>
 </body>
 
 </html>

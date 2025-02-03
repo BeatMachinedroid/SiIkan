@@ -22,7 +22,7 @@
 
                 <div class="card mb-4">
                     <div class="table-responsive p-3">
-                        <table class="table align-items-center table-flush" id="dataTable" data-page-length='5'>
+                        <table class="table align-items-center table-flush" id="dataTable" data-page-length='10'>
                             <thead class="thead-light">
                                 <tr>
                                     <th style="background-color: #6777f0; color: white;">No</th>

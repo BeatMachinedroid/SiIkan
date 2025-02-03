@@ -26,11 +26,6 @@ class Pembelian extends Model
         'status_pembayaran',
     ];
 
-    public function pembayaran()
-    {
-        return $this->hasOne(Pembayaran::class, 'id_pembelian', 'id');
-    }
-
     public function ikan()
     {
         return $this->belongsTo(Ikan::class, 'id_ikan', 'id');

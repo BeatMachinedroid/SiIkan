@@ -122,7 +122,7 @@ class TransaksiController extends Controller
                 'tanggal_pembayaran' => Carbon::now(),
                 'status' => 'selesai',
             ]);
-        }else{
+        } else {
             $bayar->update([
                 'tanggal_pembayaran' => Carbon::now(),
                 'status' => 'selesai',
@@ -132,6 +132,20 @@ class TransaksiController extends Controller
         $konfirmasi = Pembelian::where('kode_order', $id)->update([
             'status_order' => 'Selesai'
         ]);
+
+        $pembelian = Pembelian::where('kode_order', $id)->get();
+
+        foreach ($pembelian as $item) {
+            // Ambil produk yang dibeli
+            $produk = Ikan::find($item->id_ikan);
+
+            if ($produk) {
+                // Kurangi stok produk
+                $produk->stock -= $item->jumlah;
+                $produk->save();
+            }
+        }
+
 
         if ($konfirmasi) {
             return redirect()->back()->with('message', 'Barang berhasil diterima')->with('icon', 'success');

@@ -28,27 +28,50 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <!-- shop -->
-            @foreach ($categories as $item)
-            <div class="col-md-4 col-xs-6">
-                <div class="shop">
-                    <div class="shop-img">
-                        <img src="{{ asset($item->gambar) }}" alt="">
+            <div id="tab1" class="tab-pane active">
+                @if ($categories->count() > 3)
+                <div class="products-slick" data-nav="#slick-nav-2">
+                    @foreach ($categories as $item)
+                    <div class="col-md-4 col-xs-6">
+                        <div class="shop">
+                            <div class="shop-img">
+                                <img src="{{ asset($item->gambar) }}" alt="">
+                            </div>
+                            <div class="shop-body">
+                                <h3>{{ $item->nama }}</h3>
+                                <form action="{{ route('product.search') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="search" value="{{ $item->nama }}">
+                                    <button type="submit" class="transparent-button cta-btn">Shop now <i
+                                            class="fa fa-arrow-circle-right"></i></button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="shop-body">
-                        <h3>{{ $item->nama }}</h3>
-                        <form action="{{ route('product.search') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="search" value="{{ $item->nama }}">
-                            <button type="submit" class="transparent-button cta-btn">Shop now <i
-                                    class="fa fa-arrow-circle-right"></i></button>
-                        </form>
+                    @endforeach
+                </div>
+                {{-- <div id="slick-nav-1" class="products-slick-nav"></div> --}}
+                @else
+                @foreach ($categories as $item)
+                <div class="col-md-4 col-xs-6">
+                    <div class="shop">
+                        <div class="shop-img">
+                            <img src="{{ asset($item->gambar) }}" alt="">
+                        </div>
+                        <div class="shop-body">
+                            <h3>{{ $item->nama }}</h3>
+                            <form action="{{ route('product.search') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="search" value="{{ $item->nama }}">
+                                <button type="submit" class="transparent-button cta-btn">Shop now <i
+                                        class="fa fa-arrow-circle-right"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                @endforeach
+                @endif
             </div>
-            @endforeach
-            <!-- /shop -->
-
         </div>
         <!-- /row -->
     </div>
@@ -91,7 +114,8 @@
                                         <div class="product-body">
                                             <p class="product-category">{{ $item->deskripsi }}</p>
                                             <h3 class="product-name"><a
-                                                    href="{{ route('product.detail' , encrypt($item->id)) }}">{{ $item->nama
+                                                    href="{{ route('product.detail' , encrypt($item->id)) }}">{{
+                                                    $item->nama
                                                     }}</a></h3>
                                             <h4 class="product-price">Rp. {{ $item->harga }}
                                                 {{-- <del class="product-old-price">$990.00</del> --}}

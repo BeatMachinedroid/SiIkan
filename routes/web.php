@@ -73,6 +73,10 @@ Route::post('/proses/login', [AuthController::class, 'ProsesAdminlogin'])->name(
 Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::get('/logout/proses', [AuthController::class, 'logout_admin'])->name('admin.logout');
     Route::get('/dashboard', [DashboardControllers::class, 'index'])->name('admin.dashboard');
+    Route::get('/earnings/report', [DashboardControllers::class, 'earnings'])->name('admin.earnings.report');
+    Route::post('/earnings/report/search', [DashboardControllers::class, 'earnings_search'])->name('admin.earnings.report.search');
+    Route::get('/product/banyak terbeli', [DashboardControllers::class, 'most_buying'])->name('admin.product.most.buying');
+    Route::post('/product/search/banyakTerbeli', [DashboardControllers::class, 'most_buying_search'])->name('admin.product.most.search');
 
     // product
     Route::get('/product', [ProductController::class, 'index'])->name('admin.product');
