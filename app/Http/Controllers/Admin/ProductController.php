@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $products = Ikan::with('categories')->get();
         $categories = Category::all();
-        return view('admin.product', compact('products','categories'));
+        return view('admin.product', compact('products', 'categories'));
     }
 
     /**
@@ -65,65 +65,46 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->hasFile('gambar')) {
-            $validator = Validator::make($request->all(), [
-                'nama' => 'required',
-                'category' => 'required',
-                'deskripsi' => 'required',
-                'stock' => 'required|numeric',
-                'min_order' => 'required|numeric',
-                'harga' => 'required|numeric',
-                'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            ]);
-            if ($validator->fails()) {
-                return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
-            }
 
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'category' => 'required',
+            'deskripsi' => 'required',
+            'stock' => 'required|numeric',
+            'min_order' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
+        }
+
+        $product = Ikan::find(decrypt($id));
+
+        if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images/product'), $imageName);
+            $request->image->move(public_path('images/product/'), $imageName);
             $image_url = 'images/product/' . $imageName;
-            $product = Ikan::find($id);
-            $product->update([
-                'nama' => $request->nama,
-                'id_cate' => $request->category,
-                'deskripsi' => $request->deskripsi,
-                'stock' => $request->stock,
-                'min_pembelian' => $request->min_order,
-                'harga' => $request->harga,
-                'gambar' => $image_url,
-            ]);
-            if ($product) {
-                return redirect()->route('admin.product')->with('message', 'Product updated successfully')->with('icon', 'success');
-            } else {
-                return redirect()->route('admin.product')->with('message', 'Failed to update product')->with('icon', 'error');
-            }
         } else {
-            $validator = Validator::make($request->all(), [
-                'nama' => 'required',
-                'category' => 'required',
-                'deskripsi' => 'required',
-                'stock' => 'required|numeric',
-                'min_order' => 'required|numeric',
-                'harga' => 'required|numeric',
-            ]);
-            if ($validator->fails()) {
-                return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
-            }
-            $product = Ikan::find($id);
-            $product->update([
-                'nama' => $request->nama,
-                'id_cate' => $request->category,
-                'deskripsi' => $request->deskripsi,
-                'stock' => $request->stock,
-                'min_pembelian' => $request->min_order,
-                'harga' => $request->harga,
-            ]);
-            if ($product) {
-                return redirect()->route('admin.product')->with('message', 'Product updated successfully')->with('
-                icon', 'success');
-            } else {
-                return redirect()->route('admin.product')->with('message', 'Failed to update product')->with('icon', 'error');
-            }
+            $image_url = $product->gambar;
+        }
+
+        // return $request;
+        $product->update([
+            'nama' => $request->nama,
+            'id_cate' => $request->category,
+            'deskripsi' => $request->deskripsi,
+            'stock' => $request->stock,
+            'min_pembelian' => $request->min_order,
+            'harga' => $request->harga,
+            'gambar' => $image_url,
+        ]);
+
+
+        if ($product) {
+            return redirect()->route('admin.product')->with('message', 'Product updated successfully')->with('icon', 'success');
+        } else {
+            return redirect()->route('admin.product')->with('message', 'Failed to update product')->with('icon', 'error');
         }
     }
 

@@ -61,58 +61,68 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Update Product
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <form id="fishForm" enctype="multipart/form-data" method="POST"
-                                                            action="{{ route('admin.product.update' , $item->id) }}">
+                                                            action="{{ route('admin.product.update', encrypt($item->id)) }}">
+                                                            @csrf
+                                                            <input type="text" value="{{ encrypt($item->id) }}" style="display: none">
                                                             <div class="row">
-                                                                @csrf
-                                                                <input type="hidden" name="id" id="p_id"
-                                                                    value="{{ $item->id }}">
                                                                 <div class="form-group col-md-6">
                                                                     <label for="name">Nama</label>
-                                                                    <input type="text" class="form-control" name="nama"
-                                                                        id="name" required value="{{ $item->nama }}">
+                                                                    <input type="text" class="form-control" name="nama" value="{{ $item->nama }}"
+                                                                        id="name" required>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
+                                                                    <label for="category">Categories</label>
+                                                                    <select name="category" id="category"
+                                                                        class="form-control">
+                                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                                        @foreach ($categories as $category)
+                                                                        <option value="{{ $category->id }}">{{$category->nama }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
                                                                     <label for="species">Deskripsi</label>
                                                                     <textarea name="deskripsi" class="form-control"
-                                                                        id="species" cols="30"
-                                                                        rows="2">{{ $item->deskripsi }}</textarea>
+                                                                        id="species" cols="30" rows="2">{{ $item->deskripsi }}</textarea>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="Stock">Stock</label>
                                                                     <input type="number" class="form-control"
-                                                                        name="stock" id="Stock" inputmode="numeric"
-                                                                        required step="0.01" value="{{ $item->stock }}">
+                                                                        name="stock" id="Stock" inputmode="numeric" value="{{ $item->stock }}"
+                                                                        required step="0.01">
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="Stock">Minimal Order</label>
                                                                     <input type="number" class="form-control"
-                                                                        name="min_order" id="Stock" inputmode="numeric"
-                                                                        required step="0.01"
-                                                                        value="{{ $item->min_pembelian }}">
+                                                                        name="min_order" id="Stock" inputmode="numeric" value="{{ $item->min_pembelian }}"
+                                                                        required step="0.01">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="Harga">Harga Satuan / Kg</label>
+                                                                        <input type="number" class="form-control" value="{{ $item->harga }}"
+                                                                            name="harga" id="Harga" required step="0.01">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="image">Image</label>
+                                                                        <input type="file" class="form-control" name="image"
+                                                                            id="image" accept="image/*">
+                                                                    </div>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
-                                                                    <label for="Harga">Harga Satuan / Kg</label>
-                                                                    <input type="number" class="form-control"
-                                                                        name="harga" id="Harga" required step="0.01"
-                                                                        value="{{ $item->harga }}">
+                                                                    <label for="image">Old Image</label>
+                                                                    <img src="{{ asset($item->gambar) }}" alt="" style="max-width: 200px; height: auto;">
                                                                 </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="image">Image</label><br>
-                                                                    <input type="file" class="form-control" name="image"
-                                                                    id="image" accept="image/*">
-                                                                </div>
-                                                                <div class="form-group col-md-12 text-center">
-                                                                    <img src="{{ asset( $item->gambar) }}" alt=""
-                                                                        style="max-width: 200px; height: auto;">
-                                                                </div>
-                                                                <div class="col-md-12">
+                                                                <div class="form-group  col-md-12">
                                                                     <button type="submit"
                                                                         class="btn btn-primary">Submit</button>
                                                                     <button type="button"
