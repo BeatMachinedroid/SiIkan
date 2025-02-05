@@ -24,19 +24,18 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(30)->create();
 
         // categories
-        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin', 'Kakap', 'Tuna', 'Sardine'];
+        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin'];
 
         // Loop untuk memasukkan data produk
         foreach ($fishNames as $fishName) {
             Category::create([
                 'nama' => $fishName,
-                'gambar' => 'images/categories/1738406431.jpg', // Path gambar
-                // Timestamps akan otomatis diisi jika kolom ada di migration
+                'gambar' => 'images/categories/'.$fishName.'.jpg',
             ]);
         }
 
         // ikan
-        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin', 'Kakap', 'Tuna', 'Sardine'];
+        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin'];
 
         $categoryId = 1;
         foreach ($fishNames as $index => $fishName) {
@@ -47,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => rand(10, 100), // Stok acak antara 10-100
                 'min_pembelian' => rand(1, 5), // Minimal pembelian acak antara 1-5
                 'harga' => 25000,
-                'gambar' => 'images/categories/1738406431.jpg', // sesuaikan dengan gambar yang ada di images
+                'gambar' => 'images/product/'.$fishName.'.jpg', // sesuaikan dengan gambar yang ada di images
             ]);
 
             $categoryId = ($categoryId % 10) + 1;

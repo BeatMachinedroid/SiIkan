@@ -35,7 +35,7 @@ class TransaksiController extends Controller
             SUM(total_harga) AS total,
             DATE_FORMAT(MAX(pembelians.created_at), "%d %M %Y %H:%i:%s") AS tgl_order,
             MAX(pembelians.id) AS last_id'
-        )
+        )   ->where('id_user','=', Auth::user()->id)
             ->join('ikans', 'pembelians.id_ikan', '=', 'ikans.id') // Bergabung dengan tabel ikans
             ->join('users', 'pembelians.id_user', '=', 'users.id') // Bergabung dengan tabel users
             ->groupBy('kode_order')->orderBy('kode_order', 'desc')
