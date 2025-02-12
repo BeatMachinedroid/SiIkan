@@ -2,32 +2,6 @@
 
 @section('content')
 
-<script>
-    // Misalkan $item->qty sudah didefinisikan di PHP
-        var itemQty = {{ $min_order }}; // Ambil nilai qty dari PHP
-
-    // Fungsi untuk memperbarui quantity
-    function updateQuantity(increment) {
-        var quantityInput = document.getElementById('quantity');
-        var currentQuantity = parseInt(quantityInput.value) || 0;
-
-        // Tentukan kelipatan berdasarkan genap atau ganjil
-        var step = (itemQty % 2 === 0) ? 2 : 1; // Jika genap, langkah 2; jika ganjil, langkah 1
-
-        // Update quantity
-        quantityInput.value = currentQuantity + step * increment;
-    }
-
-    // Event listener untuk tombol tambah
-    document.getElementById('increase').addEventListener('click', function() {
-        updateQuantity(1);
-    });
-
-    // Event listener untuk tombol kurang
-    document.getElementById('decrease').addEventListener('click', function() {
-        updateQuantity(-1);
-    });
-</script>
 
 @if (Session::has('message'))
 <script>

@@ -7,11 +7,29 @@
 		$('#responsive-nav').toggleClass('active');
 	})
 
-	// Fix cart dropdown from closing
-	$('.cart-dropdown').on('click', function (e) {
-		e.stopPropagation();
-	});
+	// // Fix cart dropdown from closing
+	// // $('.cart-dropdown').on('click', function (e) {
+	// // 	e.stopPropagation();
+	// // });
 
+    // $('.dropdown-toggle').on('click', function(e) {
+    //     e.preventDefault(); // Mencegah perilaku default
+    //     $(this).next('.dropdown-menu').toggle(); // Menampilkan atau menyembunyikan dropdown
+    // });
+
+    $(document).ready(function() {
+        $('.dropdown-toggle').on('click', function(e) {
+            e.preventDefault();
+            $(this).next('.dropdown-menu').toggle(); // Menampilkan atau menyembunyikan dropdown
+        });
+
+        // Menutup dropdown jika klik di luar
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown-menu').hide();
+            }
+        });
+    });
 	/////////////////////////////////////////
 
 	// Products Slick
@@ -125,44 +143,44 @@
 		})
 	});
 
-	var priceInputMax = document.getElementById('price-max'),
-			priceInputMin = document.getElementById('price-min');
+	// var priceInputMax = document.getElementById('price-max'),
+	// 		priceInputMin = document.getElementById('price-min');
 
-	priceInputMax.addEventListener('change', function(){
-		updatePriceSlider($(this).parent() , this.value)
-	});
+	// priceInputMax.addEventListener('change', function(){
+	// 	updatePriceSlider($(this).parent() , this.value)
+	// });
 
-	priceInputMin.addEventListener('change', function(){
-		updatePriceSlider($(this).parent() , this.value)
-	});
+	// priceInputMin.addEventListener('change', function(){
+	// 	updatePriceSlider($(this).parent() , this.value)
+	// });
 
-	function updatePriceSlider(elem , value) {
-		if ( elem.hasClass('price-min') ) {
-			console.log('min')
-			priceSlider.noUiSlider.set([value, null]);
-		} else if ( elem.hasClass('price-max')) {
-			console.log('max')
-			priceSlider.noUiSlider.set([null, value]);
-		}
-	}
+	// function updatePriceSlider(elem , value) {
+	// 	if ( elem.hasClass('price-min') ) {
+	// 		console.log('min')
+	// 		priceSlider.noUiSlider.set([value, null]);
+	// 	} else if ( elem.hasClass('price-max')) {
+	// 		console.log('max')
+	// 		priceSlider.noUiSlider.set([null, value]);
+	// 	}
+	// }
 
-	// Price Slider
-	var priceSlider = document.getElementById('price-slider');
-	if (priceSlider) {
-		noUiSlider.create(priceSlider, {
-			start: [1, 999],
-			connect: true,
-			step: 1,
-			range: {
-				'min': 1,
-				'max': 999
-			}
-		});
+	// // Price Slider
+	// var priceSlider = document.getElementById('price-slider');
+	// if (priceSlider) {
+	// 	noUiSlider.create(priceSlider, {
+	// 		start: [1, 999],
+	// 		connect: true,
+	// 		step: 1,
+	// 		range: {
+	// 			'min': 1,
+	// 			'max': 999
+	// 		}
+	// 	});
 
-		priceSlider.noUiSlider.on('update', function( values, handle ) {
-			var value = values[handle];
-			handle ? priceInputMax.value = value : priceInputMin.value = value
-		});
-	}
+	// 	priceSlider.noUiSlider.on('update', function( values, handle ) {
+	// 		var value = values[handle];
+	// 		handle ? priceInputMax.value = value : priceInputMin.value = value
+	// 	});
+	// }
 
 })(jQuery);

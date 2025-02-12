@@ -13,18 +13,14 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\User\TransaksiController;
+use Illuminate\Support\Facades\Artisan;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage linked successfully';
+});
+
 // Users
 Route::get('/login', function () {
     return view('login');
