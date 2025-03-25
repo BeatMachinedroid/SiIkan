@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Ikan;
 use App\Models\Pembayaran;
 use App\Models\Pembelian;
+use App\Models\Toko;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,19 +25,19 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(30)->create();
 
         // categories
-        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin', 'Kakap', 'Tuna', 'Sardine'];
+        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin'];
 
         // Loop untuk memasukkan data produk
         foreach ($fishNames as $fishName) {
             Category::create([
                 'nama' => $fishName,
-                'gambar' => 'images/categories/1738406431.jpg', // Path gambar
+                'gambar' => 'images/categories/'.$fishName.'.jpg', // Path gambar
                 // Timestamps akan otomatis diisi jika kolom ada di migration
             ]);
         }
 
         // ikan
-        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin', 'Kakap', 'Tuna', 'Sardine'];
+        $fishNames = ['Lele', 'Nila', 'Gurame', 'Mas', 'Patin'];
 
         $categoryId = 1;
         foreach ($fishNames as $index => $fishName) {
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => rand(10, 100), // Stok acak antara 10-100
                 'min_pembelian' => rand(1, 5), // Minimal pembelian acak antara 1-5
                 'harga' => 25000,
-                'gambar' => 'images/categories/1738406431.jpg', // sesuaikan dengan gambar yang ada di images
+                'gambar' => 'images/categories/'.$fishName.'.jpg', // sesuaikan dengan gambar yang ada di images
             ]);
 
             $categoryId = ($categoryId % 10) + 1;
@@ -104,6 +105,17 @@ class DatabaseSeeder extends Seeder
                 'status' => 'selesai',
             ]);
         }
+
+        Toko::create([
+            'nama_toko' => 'IKAN SEGAR IBU MONIC',
+            'alamat_toko' => 'Jl alimudin ummar, ko bumi bahtera indah, no 8 blok D',
+            'latitude' => '-5.407079',
+            'longitude' => '105.3077063',
+            'no_telp_toko' => '6287887019526',
+            'email_toko' =>'commercesikan@gmail.com',
+            'gambar' => '',
+            'deskripsi' => 'Menjual ikan rumahan yang berkualitas'
+        ]);
 
 
         // admin

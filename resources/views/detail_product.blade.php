@@ -60,7 +60,8 @@
                     <h2 class="product-name">{{ $product->nama }}</h2>
                     <div>
                         <h3 class="product-price">Rp. {{ $product->harga }}</h3>
-                        <span class="product-available">@if ($product->stock > 0 ) Available @else Out of Stock @endif</span>
+                        <span class="product-available">@if ($product->stock > 0 ) Available ( {{ $product->stock }}Kg )
+                            @else Out of Stock @endif</span>
                     </div>
                     <p>{{ $product->deskripsi }}</p>
 
@@ -80,7 +81,8 @@
                                     <span class="qty-down" id="decrease">-</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> add to
+                                cart</button>
                         </div>
                     </form>
                     @else
@@ -96,7 +98,8 @@
                                     <span class="qty-down">-</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> add to
+                                cart</button>
                         </div>
                     </form>
                     @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Ikan;
 use App\Models\Ongkir;
 use App\Models\Pembelian;
 use App\Models\Pembayaran;
@@ -29,11 +30,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        $cart = Cart::with('product')->where('user_id', Auth::id())->get();
-        $total = collect($cart)->sum(function ($item) {
-            return $item->product->harga * $item->quantity;
-        });
-
         $validator = Validator::make($request->all(), [
             'total' => 'required|numeric',
             'alamat' => 'required',
@@ -46,6 +42,10 @@ class CheckoutController extends Controller
             return redirect()->back()->with('message', $validator->errors()->first())->with('icon', 'error');
         }
 
+        $cart = Cart::with('product')->where('user_id', Auth::id())->get();
+        // $total = collect($cart)->sum(function ($item) {
+        //     return $item->product->harga * $item->quantity;
+        // });
 
         $date = Carbon::now()->format('dmy');
         $orderCount = Pembelian::with('ikan')->with('user')->whereDate('created_at', Carbon::now())->orderBy('id', 'desc')->count() + 1;
@@ -64,37 +64,47 @@ class CheckoutController extends Controller
         }
 
         foreach ($cart as $item) {
-            $order = Pembelian::create([
-                'id_user' => Auth::id(),
-                'id_ikan' => $item->product_id,
-                'kode_order' => $kode,
-                'jumlah' => $item->quantity,
-                'total_harga' => $request->total,
-                'alamat' => $request->alamat.'  kota : '. $request->kota,
-                'no_telpon' => $request->no_telp,
-                'ongkir' => $ongkir,
-                'metode_pembayaran' => $request->payment,
-                'batas_pembayaran' => $newDate,
-                'status_order' => 'Diproses',
-                'status_pembayaran' => $status
-            ]);
-        }
+            if ($item->stock >= $item->quantity) {
+                $order = Pembelian::create([
+                    'id_user' => Auth::id(),
+                    'id_ikan' => $item->product_id,
+                    'kode_order' => $kode,
+                    'jumlah' => $item->quantity,
+                    'total_harga' => $request->total,
+                    'alamat' => $request->alamat . '  kota : ' . $request->kota,
+                    'no_telpon' => $request->no_telp,
+                    'ongkir' => $ongkir,
+                    'metode_pembayaran' => $request->payment,
+                    'batas_pembayaran' => $newDate,
+                    'status_order' => 'Diproses',
+                    'status_pembayaran' => $status
+                ]);
 
-        if ($order) {
-            Pembayaran::create([
-                'kode_order' => $kode,
-                'bukti_pembayaran' => '',
-                'tanggal_order' => $newDate,
-                'tanggal_pembayaran' => '',
-                'status' => $status,
-            ]);
-            $hapus = Cart::where('user_id', auth()->id())->delete();
-        }
+                Pembayaran::create([
+                    'kode_order' => $kode,
+                    'bukti_pembayaran' => '',
+                    'tanggal_order' => $newDate,
+                    'tanggal_pembayaran' => '',
+                    'status' => $status,
+                ]);
+            }
 
-        if ($hapus) {
-            return redirect()->route('welcome')->with('message', 'Checkout berhasil')->with('icon', 'success');
-        } else {
-            return back()->with('message', 'Checkout gagal')->with('icon', 'error');
+            $product = Ikan::where('id', $item->product_id)->get();
+            foreach ($product as $item2) {
+                if ($item2->stock >= $item->quantity) {
+                    $item2->update([
+                        'stock' => $item2->stock - $item->quantity
+                    ]);
+                    $hapus = Cart::where('user_id', auth()->id())->delete();
+
+                    if ($hapus) {
+                        return redirect()->route('welcome')->with('message', 'Checkout berhasil')->with('icon', 'success');
+                    } else {
+                        return back()->with('message', 'Checkout gagal')->with('icon', 'error');
+                    }
+                }
+                return back()->with('message', 'Checkout gagal, cek dulu stock!!')->with('icon', 'error');
+            }
         }
     }
 }

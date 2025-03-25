@@ -182,39 +182,44 @@ class DashboardControllers extends Controller
         }
     }
 
-    public function most_buying(){
-        $pembelian = Pembelian::selectRaw('id_user, id_ikan, sum(jumlah) jumlah_beli,  max(alamat) as alamat')
-        ->with('user', 'ikan')
-        ->groupBy('id_user','id_ikan')
-        ->orderBy('id', 'DESC')
-        ->get();
+    public function most_buying()
+    {
+        $pembelian = Pembelian::selectRaw('id_user, id_ikan, sum(jumlah) as jumlah_beli,  max(alamat) as alamat')
+            ->with('user', 'ikan')
+            ->groupBy('id_user', 'id_ikan')
+            ->orderBy('id', 'DESC')
+            ->get();
         // return $pembelian;
-        return view('admin.most_buying' , compact('pembelian'));
+        return view('admin.most_buying', compact('pembelian'));
     }
 
-    public function most_buying_search(Request $request){
+    public function most_buying_search(Request $request)
+    {
         $startDate = $request->start;
         $endDate = $request->end;
 
         $pembelian = Pembelian::selectRaw('id_user, id_ikan, sum(jumlah) jumlah_beli,  max(alamat) as alamat')
-        ->with('user', 'ikan')
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->groupBy('id_user','id_ikan')
-        ->orderBy('id', 'DESC')
-        ->get();
+            ->with('user', 'ikan')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('id_user', 'id_ikan')
+            ->orderBy('id', 'DESC')
+            ->get();
+
         // return $pembelian;
-        return view('admin.most_buying' , compact('pembelian'));
+        return view('admin.most_buying', compact('pembelian'));
     }
 
     public function earnings()
     {
         $earnings = Pembelian::selectRaw('id_user, id_ikan, sum(jumlah) jumlah_beli,max(alamat) as alamat, SUM(total_harga) AS sub_total, max(ongkir), sum(total_harga) + max(ongkir) as total')
-        ->with('ikan','user')
-        ->where('status_order', '=', 'selesai')
-        ->groupBy('id_user','id_ikan')
-        ->orderBy('id', 'DESC')
-        ->get();
-        return view('admin.earnings',compact('earnings'));
+            ->with('ikan', 'user')
+            ->where('status_order', '=', 'selesai')
+            ->groupBy('id_user', 'id_ikan')
+            ->orderBy('id', 'DESC')
+            ->get();
+        $total = Pembelian::where('status_order', '=', 'selesai')->get();
+        $totalgrand = $earnings->sum('total');
+        return view('admin.earnings', compact('earnings', 'totalgrand'));
     }
 
     public function earnings_search(Request $request)
@@ -223,12 +228,16 @@ class DashboardControllers extends Controller
         $endDate = $request->end;
 
         $earnings = Pembelian::selectRaw('id_user, id_ikan, sum(jumlah) jumlah_beli,max(alamat) as alamat, SUM(total_harga) AS sub_total, max(ongkir), sum(total_harga) + max(ongkir) as total')
-        ->with('ikan','user')
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->where('status_order', '=', 'selesai')
-        ->groupBy('id_user','id_ikan')
-        ->orderBy('id', 'DESC')
-        ->get();
-        return view('admin.earnings',compact('earnings'));
+            ->with('ikan', 'user')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status_order', '=', 'selesai')
+            ->groupBy('id_user', 'id_ikan')
+            ->orderBy('id', 'DESC')
+            ->get();
+        $total = Pembelian::where('status_order', '=', 'selesai')->get();
+        $totalgrand = $earnings->sum('total');
+        return view('admin.earnings', compact('earnings', 'totalgrand'));
     }
+
+    
 }

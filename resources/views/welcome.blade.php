@@ -35,16 +35,12 @@
                     <div class="col-md-4 col-xs-6">
                         <div class="shop">
                             <div class="shop-img">
-                                <img src="{{ asset($item->gambar) }}" alt="">
+                                <img src="{{ asset($item->gambar) }}" alt="" style="width: auto; height: 280px;">
                             </div>
                             <div class="shop-body">
                                 <h3>{{ $item->nama }}</h3>
-                                <form action="{{ route('product.search') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="search" value="{{ $item->nama }}">
-                                    <button type="submit" class="transparent-button cta-btn">Shop now <i
-                                            class="fa fa-arrow-circle-right"></i></button>
-                                </form>
+                                <a href="{{ route('search.product', $item->nama) }}" class="cta-btn">Shop now <i
+                                        class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -56,16 +52,15 @@
                 <div class="col-md-4 col-xs-6">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="{{ asset($item->gambar) }}" alt="">
+                            <img src="{{ asset($item->gambar) }}" alt="" style="width: auto; height: 280px;">
                         </div>
                         <div class="shop-body">
                             <h3>{{ $item->nama }}</h3>
-                            <form action="{{ route('product.search') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="search" value="{{ $item->nama }}">
-                                <button type="submit" class="transparent-button cta-btn">Shop now <i
-                                        class="fa fa-arrow-circle-right"></i></button>
-                            </form>
+                            {{-- <a class="transparent-button cta-btn">Shop now <i
+                                    class="fa fa-arrow-circle-right"></i></a> --}}
+                            <a href="{{ route('search.product', $item->nama) }}" class="cta-btn">Shop now <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+
                         </div>
                     </div>
                 </div>
@@ -105,7 +100,8 @@
                                 <div class="product">
                                     <a href="{{ route('product.detail', encrypt($item->id)) }}">
                                         <div class="product-img">
-                                            <img src="{{ asset($item->gambar) }}" alt="">
+                                            <img src="{{ asset($item->gambar) }}" alt=""
+                                                style="width: 264px; height: 280px;">
                                             <div class="product-label">
                                                 {{-- <span class="sale">-30%</span> --}}
                                                 <span class="new">NEW</span>
@@ -203,15 +199,15 @@
                     <div class="products-tabs">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
+                            <div class="products-slick" data-nav="#slick-nav-2">
                                 @forelse ($top_sell as $item)
                                 <!-- product -->
                                 <div class="product">
                                     <a href="{{ route('product.detail', encrypt($item->ikan->id)) }}">
                                         <div class="product-img">
-                                            <img src="{{ $item->ikan->gambar }}" alt="">
+                                            <img src="{{ $item->ikan->gambar }}" alt="" style="width: 264px; height: 280px;">
                                         </div>
-                                        <div class="product-body">
+                                        <div class=" product-body">
                                             <p class="product-category">{{ $item->deskripsi }}</p>
                                             <h3 class="product-name"><a
                                                     href="{{ route('product.detail' , encrypt($item->ikan->id)) }}">{{
@@ -250,8 +246,8 @@
                                 @empty
 
                                 @endforelse
+                                <div id="slick-nav-2" class="products-slick-nav"></div>
                             </div>
-                            <div id="slick-nav-1" class="products-slick-nav"></div>
                         </div>
                         <!-- /tab -->
                     </div>

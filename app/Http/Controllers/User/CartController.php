@@ -27,7 +27,7 @@ class CartController extends Controller
      */
     public function create(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'product_id' => 'required',
             'user_id' => 'required',
         ]);
@@ -44,6 +44,8 @@ class CartController extends Controller
             $item_exist->total += $product->harga;
             $item_exist->save();
             return back()->with('message', 'Product added to cart successfully')->with('icon', 'success');
+        }if ($product->stock < $request->quantity) {
+            return back()->with('message', 'Failed to add product to cart, out of stock')->with('icon', 'error');
         } else {
             $cart = Cart::create([
                 'user_id' => Auth::id(),
@@ -57,7 +59,6 @@ class CartController extends Controller
             } else {
                 return back()->with('message', 'Failed to add product to cart')->with('icon', 'error');
             }
-
         }
     }
 
@@ -72,7 +73,7 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'product_id' => 'required',
             'user_id' => 'required',
             'quantity' => 'required',
@@ -92,9 +93,10 @@ class CartController extends Controller
             $item_exist->save();
             return back()->with('message', 'Product added to cart successfully')->with('icon', 'success');
         } else {
-            if($product->min_pembelian > $request->quantity){
+            if ($product->min_pembelian > $request->quantity) {
                 return back()->with('message', 'Failed to add product to cart, quantity exceeds stock')->with('icon', 'error');
-            }if($product->stock == 0){
+            }
+            if ($product->stock < $request->quantity) {
                 return back()->with('message', 'Failed to add product to cart, out of stock')->with('icon', 'error');
             } else {
                 $cart = Cart::create([
@@ -111,7 +113,6 @@ class CartController extends Controller
                 }
             }
         }
-
     }
 
     /**
@@ -121,7 +122,7 @@ class CartController extends Controller
     {
         $cart = Cart::find(decrypt($id));
         $cart->delete();
-        if($cart){
+        if ($cart) {
             return back()->with('message', 'Product deleted successfully')->with('icon', 'success');
         } else {
             return back()->with('message', 'Failed to delete product')->with('icon', 'error');
@@ -131,7 +132,7 @@ class CartController extends Controller
     public function deleteAll()
     {
         $cart = Cart::where('user_id', Auth::id())->delete();
-        if($cart){
+        if ($cart) {
             return back()->with('message', 'All products deleted successfully')->with('icon', 'success');
         } else {
             return back()->with('message', 'Failed to delete products')->with('icon', 'error');

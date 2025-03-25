@@ -13,6 +13,7 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\User\TransaksiController;
+use Illuminate\Support\Facades\Artisan;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -25,6 +26,11 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/symlink', function () {
+    Artisan::call('storage:link');
+    return "Storage link created!";
+});
 // Users
 Route::get('/login', function () {
     return view('login');
@@ -37,7 +43,8 @@ Route::post('/proses_register', [AuthController::class, 'register'])->name('pros
 
 Route::get('/', [UserProductController::class, 'index'])->name('welcome');
 Route::get('/product', [UserProductController::class, 'show'])->name('product.show');
-Route::post('/product/search', [SearchController::class, 'product_search'])->name('product.search');
+Route::post('/product/kategori/search', [SearchController::class, 'product_search'])->name('product.search');
+// Route::post('/product/search/add', [SearchController::class, 'product_search'])->name('product.search.add');
 Route::get('/product/search/{nama}', [SearchController::class, 'search'])->name('search.product');
 Route::get('/product/detail/{id}', [UserProductController::class, 'detail_product'])->name('product.detail');
 

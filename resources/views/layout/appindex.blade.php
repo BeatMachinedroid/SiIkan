@@ -8,6 +8,7 @@
 
     <title>SiIkan</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link href="{{ asset('img/logo.png') }}" rel="icon">
 
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 
@@ -42,13 +43,13 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="header-search">
-                            <form action="{{ route('product.search')}}" method="post">
+                        {{-- <div class="header-search">
+                            <form action="{{ route('product.search')}}" method="POST">
                                 @csrf
                                 <input class="input" placeholder="Search here" name="search">
                                 <button class="search-btn" type="submit">Search</button>
                             </form>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
@@ -158,13 +159,20 @@
         <div class="container">
             <!-- responsive-nav -->
             <div id="responsive-nav">
-                           <!-- NAV -->
-                           <ul class="main-nav nav navbar-nav">
-                            <li class="{{ Route::currentRouteNamed('welcome') ? 'active' : ''  }}"><a href="{{ route('welcome') }}">Home</a></li>
-                            <li class="{{ Route::currentRouteNamed('product.show') || Route::currentRouteNamed('product.detail') || Route::currentRouteNamed('product.search') || Route::currentRouteNamed('product.cart.checkout') ? 'active' : ''  }}"><a href="{{ route('product.show') }}">Product</a></li>
-                            <li class="{{ Route::currentRouteNamed('transaksi')  || Route::currentRouteNamed('user.detail.transaksi')  ? 'active' : ''}}"><a href="{{ route('transaksi') }}">Transaksi</a></li>
-                        </ul>
-                        <!-- /NAV -->
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li class="{{ Route::currentRouteNamed('welcome') ? 'active' : ''  }}"><a
+                            href="{{ route('welcome') }}">Home</a></li>
+                    <li
+                        class="{{ Route::currentRouteNamed('product.show') || Route::currentRouteNamed('product.detail') || Route::currentRouteNamed('product.search') || Route::currentRouteNamed('product.cart.checkout') ? 'active' : ''  }}">
+                        <a href="{{ route('product.show') }}">Product</a>
+                    </li>
+                    <li
+                        class="{{ Route::currentRouteNamed('transaksi')  || Route::currentRouteNamed('user.detail.transaksi')  ? 'active' : ''}}">
+                        <a href="{{ route('transaksi') }}">Transaksi</a>
+                    </li>
+                </ul>
+                <!-- /NAV -->
             </div>
             <!-- /responsive-nav -->
         </div>
@@ -186,9 +194,12 @@
                             <h3 class="footer-title">About Us</h3>
                             <p>{{ $tokos->deskripsi }}</p><br>
                             <ul class="footer-links">
-                                <li><a href="https://www.google.com/maps/search/?api=1&query={{ $tokos->nama_toko }}"><i class="fa fa-map-marker"></i>{{ $tokos->alamat_toko }}</a></li>
-                                <li><a href="https://wa.me/{{ $tokos->no_telp_toko }}"><i class="fa fa-phone"></i>{{ $tokos->no_telp_toko }}</a></li>
-                                <li><a href="mailto:{{ $tokos->email_toko }}"><i class="fa fa-envelope-o"></i>{{ $tokos->email_toko }}</a></li>
+                                <li><a href="https://www.google.com/maps/search/?api=1&query={{ $tokos->nama_toko }}"><i
+                                            class="fa fa-map-marker"></i>{{ $tokos->alamat_toko }}</a></li>
+                                <li><a href="https://wa.me/{{ $tokos->no_telp_toko }}"><i class="fa fa-phone"></i>{{
+                                        $tokos->no_telp_toko }}</a></li>
+                                <li><a href="mailto:{{ $tokos->email_toko }}"><i class="fa fa-envelope-o"></i>{{
+                                        $tokos->email_toko }}</a></li>
                             </ul>
                         </div>
                         @empty
@@ -285,6 +296,7 @@
           $('#dataTableHover').DataTable();
         });
     </script>
+
 </body>
 
 </html>
