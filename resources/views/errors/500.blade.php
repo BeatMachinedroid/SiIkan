@@ -28,8 +28,8 @@
           <div class="text-center" >
             <img src="{{ asset('assetss/img/error.svg') }}" style="max-height: 100px;" class="mb-3">
             <h3 class="text-gray-800 font-weight-bold">Oopss !!!</h3>
-            <p class="lead text-gray-800 mx-auto">404 Page Not Found</p>
-            <a class="btn btn-primary text-white" onclick="window.history.back();">&larr; Back</a>
+            <p class="lead text-gray-800 mx-auto">500 Server Error</p>
+            {{-- <a class="btn btn-primary text-white" onclick="window.history.back();">&larr; Back</a> --}}
           </div>
     </div>
 

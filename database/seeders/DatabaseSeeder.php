@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         foreach ($fishNames as $fishName) {
             Category::create([
                 'nama' => $fishName,
-                'gambar' => 'images/categories/'.$fishName.'.jpg', // Path gambar
+                'gambar' => 'images/categories/1738406431.jpg', // Path gambar
                 // Timestamps akan otomatis diisi jika kolom ada di migration
             ]);
         }
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => rand(10, 100), // Stok acak antara 10-100
                 'min_pembelian' => rand(1, 5), // Minimal pembelian acak antara 1-5
                 'harga' => 25000,
-                'gambar' => 'images/categories/'.$fishName.'.jpg', // sesuaikan dengan gambar yang ada di images
+                'gambar' => 'images/categories/1738406431.jpg', // sesuaikan dengan gambar yang ada di images
             ]);
 
             $categoryId = ($categoryId % 10) + 1;

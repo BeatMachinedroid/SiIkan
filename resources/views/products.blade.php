@@ -68,7 +68,7 @@
                     <div class="col-md-4 col-xs-6">
                         <div class="product">
                             <div class="product-img">
-                                <img src="{{ asset($item->gambar) }}" alt="">
+                                <img src="{{ asset($item->gambar) }}" alt="" style="height: 200px">
                                 <div class="product-label">
                                     <span class="new">NEW</span>
                                 </div>

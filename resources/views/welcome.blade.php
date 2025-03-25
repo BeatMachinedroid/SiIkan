@@ -35,7 +35,7 @@
                     <div class="col-md-4 col-xs-6">
                         <div class="shop">
                             <div class="shop-img">
-                                <img src="{{ asset($item->gambar) }}" alt="" style="width: auto; height: 280px;">
+                                <img src="{{ asset($item->gambar) }}" alt="">
                             </div>
                             <div class="shop-body">
                                 <h3>{{ $item->nama }}</h3>
@@ -46,13 +46,13 @@
                     </div>
                     @endforeach
                 </div>
-                {{-- <div id="slick-nav-1" class="products-slick-nav"></div> --}}
+                {{-- <div id="slick-nav-2" class="products-slick-nav"></div> --}}
                 @else
                 @foreach ($categories as $item)
                 <div class="col-md-4 col-xs-6">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="{{ asset($item->gambar) }}" alt="" style="width: auto; height: 280px;">
+                            <img src="{{ asset($item->gambar) }}" alt="">
                         </div>
                         <div class="shop-body">
                             <h3>{{ $item->nama }}</h3>
@@ -100,8 +100,7 @@
                                 <div class="product">
                                     <a href="{{ route('product.detail', encrypt($item->id)) }}">
                                         <div class="product-img">
-                                            <img src="{{ asset($item->gambar) }}" alt=""
-                                                style="width: 264px; height: 280px;">
+                                            <img src="{{ asset($item->gambar) }}" alt="">
                                             <div class="product-label">
                                                 {{-- <span class="sale">-30%</span> --}}
                                                 <span class="new">NEW</span>
@@ -199,13 +198,13 @@
                     <div class="products-tabs">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-2">
+                            <div class="products-slick" data-nav="#slick-nav-1">
                                 @forelse ($top_sell as $item)
                                 <!-- product -->
                                 <div class="product">
                                     <a href="{{ route('product.detail', encrypt($item->ikan->id)) }}">
                                         <div class="product-img">
-                                            <img src="{{ $item->ikan->gambar }}" alt="" style="width: 264px; height: 280px;">
+                                            <img src="{{ $item->ikan->gambar }}" alt="">
                                         </div>
                                         <div class=" product-body">
                                             <p class="product-category">{{ $item->deskripsi }}</p>
@@ -248,6 +247,7 @@
                                 @endforelse
                                 <div id="slick-nav-2" class="products-slick-nav"></div>
                             </div>
+                            <div id="slick-nav-1" class="products-slick-nav"></div>
                         </div>
                         <!-- /tab -->
                     </div>
